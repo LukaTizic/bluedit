@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <div className="w-full background-light850_dark100 h-screen flex justify-center h3-semibold  items-center text-">
-      Bluedit
+    <div className="w-full h-screen  flex flex-col justify-center  items-center ">
+      <h1 className="h1-bold ">Hello</h1>
     </div>
   );
 }
