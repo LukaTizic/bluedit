@@ -11,7 +11,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
               Join Blue<span className="text-primary-500">dit</span>
             </h1>
             <p className="paragraph-regular text-dark500_light400">
-              Help others and ask for help
+              Ask for help and help others
             </p>
           </div>
         </div>
