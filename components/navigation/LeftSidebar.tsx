@@ -3,7 +3,7 @@ import ROUTES from "@/constants/routes";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import NavLinks from "./NavLinks";
+import NavLinks from "./navbar/NavLinks";
 
 const LeftSidebar = () => {
   return (
