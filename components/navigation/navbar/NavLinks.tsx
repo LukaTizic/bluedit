@@ -14,26 +14,23 @@ const NavLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
   return (
     <>
       {sidebarLinks.map((item) => {
+        const isExternal =
+          item.route.startsWith("http") || item.route.startsWith("www.");
         const isActive =
-          (pathname.includes(item.route) && item.route.length > 1) ||
-          pathname === item.route;
+          (!isExternal &&
+            pathname.includes(item.route) &&
+            item.route.length > 1) ||
+          (!isExternal && pathname === item.route);
 
-        if (item.route === "/profile") {
-          if (userId) item.route = `${item.route}/${userId}`;
-          else return null;
+        let route = item.route;
+
+        // Append userId for profile
+        if (item.route === "/profile" && userId) {
+          route = `${item.route}/${userId}`;
         }
 
-        const LinkComponent = (
-          <Link
-            href={item.route}
-            key={item.label}
-            className={cn(
-              isActive
-                ? "primary-gradient rounded-lg text-light-900"
-                : "text-dark300_light900",
-              "flex items-center justify-start gap-4 bg-transparent p-4"
-            )}
-          >
+        const linkContent = (
+          <>
             <Image
               src={item.imgURL}
               alt={item.label}
@@ -49,15 +46,43 @@ const NavLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
             >
               {item.label}
             </p>
+          </>
+        );
+
+        const LinkComponent = isExternal ? (
+          <a
+            href={route.startsWith("http") ? route : `https://${route}`}
+            key={item.label}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "text-dark300_light900",
+              "flex items-center justify-start gap-4 bg-transparent p-4"
+            )}
+          >
+            {linkContent}
+          </a>
+        ) : (
+          <Link
+            href={route}
+            key={item.label}
+            className={cn(
+              isActive
+                ? "primary-gradient rounded-lg text-light-900"
+                : "text-dark300_light900",
+              "flex items-center justify-start gap-4 bg-transparent p-3"
+            )}
+          >
+            {linkContent}
           </Link>
         );
 
         return isMobileNav ? (
-          <SheetClose asChild key={item.route}>
+          <SheetClose asChild key={item.label}>
             {LinkComponent}
           </SheetClose>
         ) : (
-          <React.Fragment key={item.route}>{LinkComponent}</React.Fragment>
+          <React.Fragment key={item.label}>{LinkComponent}</React.Fragment>
         );
       })}
     </>

@@ -34,4 +34,9 @@ export const sidebarLinks = [
     route: "/ask-question",
     label: "Ask a question",
   },
+  {
+    imgURL: "/icons/star-red.svg",
+    route: "www.semper.blue",
+    label: "Semper",
+  },
 ];
