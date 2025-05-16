@@ -19,7 +19,12 @@ const Home = async () => {
       </section>
 
       <section className="mt-11">
-        <LocalSearch />
+        <LocalSearch
+          route="/"
+          imgSrc={"/icons/search.svg"}
+          placeholder="Search questions..."
+          otherClasses="flex-1"
+        />
       </section>
 
       <div className="mt-10 flex w-full flex-col gap-6">
