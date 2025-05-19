@@ -7,6 +7,7 @@ import { formUrlQuery, removeKeysFromUrlQuery } from "@/lib/url";
 import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
+import { CircleX } from "lucide-react";
 
 const filters = [
   { name: "React", value: "react" },
@@ -47,6 +48,17 @@ const HomeFilter = () => {
     router.push(newUrl, { scroll: false });
   };
 
+  const removeAllFilters = () => {
+    setActive("");
+
+    const newUrl = removeKeysFromUrlQuery({
+      params: searchParams.toString(),
+      keysToRemove: ["filter"],
+    });
+
+    router.push(newUrl, { scroll: false });
+  };
+
   return (
     <div className="mt-10 hidden flex-wrap gap-3 sm:flex">
       {filters.map((filter) => (
@@ -63,6 +75,14 @@ const HomeFilter = () => {
           {filter.name}
         </Button>
       ))}
+      {active && (
+        <Button
+          className="bg-light-800 text-light-500 hover:bg-light-800 dark:bg-dark-300 dark:text-light-500 dark:hover:bg-dark-300"
+          onClick={() => removeAllFilters()}
+        >
+          <CircleX />
+        </Button>
+      )}
     </div>
   );
 };
