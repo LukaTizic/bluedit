@@ -3,6 +3,7 @@ import { getTimeStamp } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import TagCard from "./TagCard";
+import Metric from "../metric/Metric";
 
 interface Props {
   question: Question;
@@ -29,6 +30,42 @@ const QuestionCard = ({
         {tags.map((tag: Tag) => (
           <TagCard key={tag._id} _id={tag._id} name={tag.name} compact />
         ))}
+      </div>
+
+      <div className="flex-between mt-6 w-full flex-wrap gap-3">
+        <Metric
+          imgUrl={author.image}
+          alt={author.name}
+          value={author.name}
+          title={`• asked ${getTimeStamp(createdAt)}`}
+          href={ROUTES.PROFILE(author._id)}
+          textStyles="body-medium text-dark400_light700"
+          isAuthor
+        />
+
+        <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
+          <Metric
+            imgUrl="/icons/like.svg"
+            alt="like"
+            value={upvotes}
+            title=" Votes"
+            textStyles="small-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/icons/message.svg"
+            alt="answers"
+            value={answers}
+            title=" Answers"
+            textStyles="small-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/icons/eye.svg"
+            alt="views"
+            value={views}
+            title=" Views"
+            textStyles="small-medium text-dark400_light800"
+          />
+        </div>
       </div>
     </div>
   );
