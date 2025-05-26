@@ -16,6 +16,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import Editor from "../editor";
 
 const QuestionForm = () => {
   const form = useForm({
@@ -61,7 +62,9 @@ const QuestionForm = () => {
                 Detailed explanation of your problem{" "}
                 <span className="text-red-500">*</span>
               </FormLabel>
-              <FormControl>Editor</FormControl>
+              <FormControl>
+                <Editor />
+              </FormControl>
               <FormDescription className="body-regular  text-light-500">
                 Introduce the problem and expand on what you&apos;ve put in the
                 title.
