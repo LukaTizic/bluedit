@@ -36,7 +36,7 @@ export const sidebarLinks = [
   },
   {
     imgURL: "/icons/star-red.svg",
-    route: "www.semper.blue",
+    route: "www.semper.blue/about",
     label: "Semper",
   },
 ];

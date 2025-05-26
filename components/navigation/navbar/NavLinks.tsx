@@ -2,6 +2,7 @@
 import { SheetClose } from "@/components/ui/sheet";
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -41,10 +42,18 @@ const NavLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
             <p
               className={cn(
                 isActive ? "base-bold" : "base-bold text-primary-500",
-                !isMobileNav && "max-lg:hidden"
+                !isMobileNav && "max-lg:hidden",
+                "flex items-center", // always flex
+                item.label === "Semper" &&
+                  "gap-1 transition-all duration-300 hover:gap-3"
               )}
             >
               {item.label}
+              {item.label === "Semper" && (
+                <span className="ml-1">
+                  <ChevronRight width={20} />
+                </span>
+              )}
             </p>
           </>
         );
