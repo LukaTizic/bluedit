@@ -2,7 +2,7 @@
 
 import { AskQuestionSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useRef } from "react";
 
 import {
   Form,
@@ -16,8 +16,16 @@ import {
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("@/components/editor"), {
+  ssr: false,
+});
 
 const QuestionForm = () => {
+  const editorRef = useRef<MDXEditorMethods>(null);
+
   const form = useForm({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: { title: "", content: "", tags: [] },
@@ -61,7 +69,13 @@ const QuestionForm = () => {
                 Detailed explanation of your problem{" "}
                 <span className="text-red-500">*</span>
               </FormLabel>
-              <FormControl>Editor</FormControl>
+              <FormControl>
+                <Editor
+                  value={field.value}
+                  fieldChange={field.onChange}
+                  editorRef={editorRef}
+                />
+              </FormControl>
               <FormDescription className="body-regular  text-light-500">
                 Introduce the problem and expand on what you&apos;ve put in the
                 title.
