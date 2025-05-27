@@ -19,6 +19,7 @@ import { Button } from "../ui/button";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 import dynamic from "next/dynamic";
 import { z } from "zod";
+import TagCard from "../cards/TagCard";
 
 const Editor = dynamic(() => import("@/components/editor"), {
   ssr: false,
@@ -59,6 +60,19 @@ const QuestionForm = () => {
     }
   };
 
+  const handleTagRemove = (tag: string, field: { value: string[] }) => {
+    const newTags = field.value.filter((t) => t !== tag);
+
+    form.setValue("tags", newTags);
+
+    if (newTags.length === 0) {
+      form.setError("tags", {
+        type: "manual",
+        message: "Tags are required",
+      });
+    }
+  };
+
   const handleCreateQuestion = () => {};
   return (
     <Form {...form}>
@@ -94,7 +108,7 @@ const QuestionForm = () => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Detailed explanation of your problem{" "}
+                Detailed explanation of your problem
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
@@ -129,7 +143,17 @@ const QuestionForm = () => {
                   />
                   {field.value.length > 0 && (
                     <div className="flex-start mt-2.5 flex-wrap gap-2.5">
-                      {field?.value?.map((tag: string) => `${tag}, `)}
+                      {field?.value?.map((tag: string) => (
+                        <TagCard
+                          key={tag}
+                          name={tag}
+                          _id={tag}
+                          compact
+                          remove
+                          isButton
+                          handleRemove={() => handleTagRemove(tag, field)}
+                        />
+                      ))}
                     </div>
                   )}
                 </div>
