@@ -266,6 +266,13 @@
 @utility primary-gradient {
   background: linear-gradient(129deg, #0070ff 0%, #5faee2 100%);
 }
+@utility primary-gradient-hover {
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(-51deg, #0070ff 0%, #5faee2 100%);
+  }
+}
 
 @utility dark-gradient {
   background: linear-gradient(

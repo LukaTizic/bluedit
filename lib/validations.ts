@@ -1,15 +1,15 @@
 import { z } from "zod";
 
-export const signInSchema = z.object({
+export const SignInSchema = z.object({
   email: z
     .string()
     .min(1, { message: "Email is required" })
-    .email({ message: "Please provide a valid email address" }),
+    .email({ message: "Please provide a valid email address." }),
 
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters" })
-    .max(100, { message: "Please use shorter password" }),
+    .min(6, { message: "Password must be at least 6 characters long. " })
+    .max(100, { message: "Password cannot exceed 100 characters." }),
 });
 
 export const SignUpSchema = z.object({
@@ -53,9 +53,10 @@ export const SignUpSchema = z.object({
 export const AskQuestionSchema = z.object({
   title: z
     .string()
-    .min(1, { message: "Title is required." })
-    .max(100, { message: "Tittle must be less than 100 characters." }),
-  content: z.string().min(1, { message: "Content is required." }),
+    .min(5, { message: "Title is required." })
+    .max(100, { message: "Title cannot exceed 100 characters." }),
+
+  content: z.string().min(1, { message: "Body is required." }),
   tags: z
     .array(
       z
@@ -85,7 +86,7 @@ export const UserSchema = z.object({
 
 export const AccountSchema = z.object({
   userId: z.string().min(1, { message: "User ID is required." }),
-  name: z.string().min(3, { message: "Name is required." }),
+  name: z.string().min(1, { message: "Name is required." }),
   image: z.string().url({ message: "Please provide a valid URL." }).optional(),
   password: z
     .string()
@@ -106,4 +107,21 @@ export const AccountSchema = z.object({
   providerAccountId: z
     .string()
     .min(1, { message: "Provider Account ID is required." }),
+});
+
+export const SignInWithOAuthSchema = z.object({
+  provider: z.enum(["google", "github"]),
+  providerAccountId: z
+    .string()
+    .min(1, { message: "Provider Account ID is required." }),
+  user: z.object({
+    name: z.string().min(1, { message: "Name is required." }),
+    username: z
+      .string()
+      .min(3, { message: "Username must be at least 3 characters long." }),
+    email: z
+      .string()
+      .email({ message: "Please provide a valid email address." }),
+    image: z.string().url("Invalid image URL").optional(),
+  }),
 });
