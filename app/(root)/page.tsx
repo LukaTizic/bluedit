@@ -62,9 +62,6 @@ interface SearchParams {
 }
 
 const Home = async ({ searchParams }: SearchParams) => {
-  const users = await test();
-
-  console.log(users);
   const { query = "", filter = "" } = await searchParams;
 
   const filteredQuestions = questions.filter((question) =>
