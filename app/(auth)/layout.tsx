@@ -17,7 +17,8 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
         </div>
         {children}
         {/* TODO: Add social authentication */}
-        <SocialAuthForm />
+        {/* TODO: fix accounts for oAuth */}
+        {/* <SocialAuthForm /> */}
       </section>
     </main>
   );
