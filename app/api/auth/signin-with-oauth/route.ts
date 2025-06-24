@@ -9,6 +9,7 @@ import { ValidationError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
 import { SignInWithOAuthSchema } from "@/lib/validations";
 
+// Fix for Vercel
 export async function POST(request: Request) {
   const { provider, providerAccountId, user } = await request.json();
 
