@@ -1,3 +1,5 @@
+"use server";
+
 import mongoose from "mongoose";
 
 import Question from "@/database/question.model";
