@@ -175,3 +175,31 @@ export async function editQuestion(
     await session.endSession();
   }
 }
+
+export async function getQuestion(
+  params: getQuestionParams
+): Promise<ActionResponse<Question>> {
+  const validationResult = await action({
+    params,
+    schema: GetQuestionSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { questionId } = validationResult.params!;
+
+  try {
+    const question = await Question.findById(questionId).populate("tags");
+
+    if (!question) {
+      throw new Error("Question not found.");
+    }
+
+    return { success: true, data: JSON.parse(JSON.stringify(question)) };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
