@@ -176,6 +176,8 @@ export async function editQuestion(
   }
 }
 
+// When action is used in client components, they are invoked via a POST request.
+// When using action on server components, its regular async functions -  Direct Invocation
 export async function getQuestion(
   params: getQuestionParams
 ): Promise<ActionResponse<Question>> {
