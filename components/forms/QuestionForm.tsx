@@ -102,7 +102,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           toast("Success", {
             description: "Question updated successfully",
           });
-
+          //@ts-ignore
           if (result.data) router.push(ROUTES.QUESTION(result.data._id));
         } else {
           toast(`Error ${result.status}`, {
