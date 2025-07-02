@@ -102,7 +102,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           toast("Success", {
             description: "Question updated successfully",
           });
-
+          //@ts-ignore
           if (result.data) router.push(ROUTES.QUESTION(result.data._id));
         } else {
           toast(`Error ${result.status}`, {
@@ -225,7 +225,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           <Button
             type="submit"
             disabled={isPending}
-            className="primary-gradient w-fit !text-light-900"
+            className="primary-gradient w-fit !text-light-900 cursor-pointer hover:reverse-primary-gradient"
           >
             {isPending ? (
               <>
@@ -233,7 +233,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
                 <span>Submitting</span>
               </>
             ) : (
-              <>{isEdit ? "Edit " : "Ask a Question"}</>
+              <>{isEdit ? "Update " : "Ask a Question"}</>
             )}
           </Button>
         </div>
