@@ -52,7 +52,7 @@ const Home = async ({ searchParams }: SearchParams) => {
             ))
           ) : (
             <div className="mt-10 flex w-full items-center justify-center">
-              <p className="text-dark400_light700">No questions found</p>
+              <p className="text-dark400_light700">No questions found.</p>
             </div>
           )}
         </div>
