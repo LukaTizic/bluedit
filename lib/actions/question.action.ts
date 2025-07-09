@@ -81,7 +81,7 @@ export async function createQuestion(
 }
 
 export async function editQuestion(
-  params: editQuestionParams
+  params: EditQuestionParams
 ): Promise<ActionResponse<IQuestionDoc>> {
   const validationResult = await action({
     params,
@@ -188,7 +188,7 @@ export async function editQuestion(
 }
 
 export async function getQuestion(
-  params: getQuestionParams
+  params: GetQuestionParams
 ): Promise<ActionResponse<Question>> {
   const validationResult = await action({
     params,
