@@ -8,6 +8,7 @@ import { formatNumber, getTimeStamp } from "@/lib/utils";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
+import View from "../View";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
@@ -26,6 +27,7 @@ const QuestionDetails = async ({ params }: RouteParams) => {
 
   return (
     <>
+      <View questionId={id} />
       <div className="flex-start w-full flex-col">
         <div className=" flex w-full flex-col-reverse justify-between">
           <div className="flex items-center justify-start gap-1">
@@ -58,21 +60,21 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           alt="clock icon"
           value={` asked ${getTimeStamp(new Date(createdAt))}`}
           title=""
-          textStyles="small-regular text-dark400_light700"
+          textStyles="small-regular text-primary-500"
         />
         <Metric
           imgUrl="/icons/message.svg"
           alt="message icon"
           value={answers}
           title=""
-          textStyles="small-regular text-dark400_light700"
+          textStyles="small-regular text-primary-500"
         />
         <Metric
           imgUrl="/icons/eye.svg"
           alt="eye icon"
           value={formatNumber(views)}
           title=""
-          textStyles="small-regular text-dark400_light700"
+          textStyles="small-regular text-primary-500"
         />
       </div>
 
