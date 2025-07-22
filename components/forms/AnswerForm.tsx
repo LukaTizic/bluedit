@@ -56,8 +56,7 @@ const AnswerForm = () => {
             name="content"
             render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3 ">
-                <FormControl className="mt-3.5">
-                  {/* TODO: FIX TEXT COLOR ON DARK MODE */}
+                <FormControl>
                   <Editor
                     value={field.value}
                     editorRef={editorRef}
