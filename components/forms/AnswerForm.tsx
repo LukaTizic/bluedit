@@ -5,7 +5,8 @@ import { MDXEditorMethods } from "@mdxeditor/editor";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -17,14 +18,26 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+
+import { api } from "@/lib/api";
 import { AnswerSchema } from "@/lib/validations";
+import { createAnswer } from "@/lib/actions/answers.action";
+import { toast } from "sonner";
 
 const Editor = dynamic(() => import("@/components/editor"), {
   ssr: false,
 });
 
-const AnswerForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+interface Props {
+  questionId: string;
+  questionTitle: string;
+  questionContent: string;
+}
+
+const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
+  const [isAnswering, startAnsweringTransition] = useTransition();
+  const [isAISubmitting, setIsAISubmitting] = useState(false);
+  const session = useSession();
 
   const editorRef = useRef<MDXEditorMethods>(null);
 
@@ -36,26 +49,43 @@ const AnswerForm = () => {
   });
 
   const handleSubmit = async (values: z.infer<typeof AnswerSchema>) => {
-    console.log(values);
+    startAnsweringTransition(async () => {
+      const result = await createAnswer({
+        questionId,
+        content: values.content,
+      });
+
+      if (result.success) {
+        form.reset();
+
+        toast("Success", {
+          description: "Your answer has been posted successfully!",
+        });
+      } else {
+        toast("Error", {
+          description: result.error?.message,
+        });
+      }
+    });
   };
 
   return (
     <div>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
-        <h4 className="mt-5 paragraph-semibold text-dark400_light800">
+        <h4 className="paragraph-semibold text-dark400_light800">
           Write your answer here
         </h4>
       </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit)}
-          className="mt-2 flex w-full flex-col gap-10  "
+          className="mt-6 flex w-full flex-col gap-10"
         >
           <FormField
             control={form.control}
             name="content"
             render={({ field }) => (
-              <FormItem className="flex w-full flex-col gap-3 ">
+              <FormItem className="flex w-full flex-col gap-3">
                 <FormControl>
                   <Editor
                     value={field.value}
@@ -70,7 +100,7 @@ const AnswerForm = () => {
 
           <div className="flex justify-end">
             <Button type="submit" className="primary-gradient w-fit">
-              {isSubmitting ? (
+              {isAnswering ? (
                 <>
                   <ReloadIcon className="mr-2 size-4 animate-spin" />
                   Posting...
