@@ -10,7 +10,7 @@ interface Props {
   imgSrc: string;
   placeholder: string;
   otherClasses?: string;
-  iconPosition: "left" | "right";
+  iconPosition?: "left" | "right";
 }
 
 const LocalSearch = ({
